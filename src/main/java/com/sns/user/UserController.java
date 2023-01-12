@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sns.user.bo.UserBO;
 
@@ -29,6 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping("/check_duplication")
+	@ResponseBody
 	public Map<String, Object> checkDuplication(@RequestParam("loginId") int loginId) {
 		Boolean doesExist = userBO.checkDuplication(loginId);
 

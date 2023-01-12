@@ -35,7 +35,7 @@
 				<div class="my-2 font-weight-bold">아이디</div>
 				<div class="d-flex">
 					<input type="text" class="form-control" name="loginId" id="loginId">
-					<input type="button" id="duplicateCheckBtn" class="btn btn-info">
+					<button type="button" id="duplicateCheckBtn" class="btn btn-info">중복확인</button>
 				</div>
 
 				<div class="my-2 font-weight-bold">비밀번호</div>
@@ -59,7 +59,7 @@
 	<script>
 		$(document).ready(function() {
 			$('#duplicateCheckBtn').on('click', function() {
-				let userId = $('#userId').val;
+				let loginId = $('#loginId').val();
 
 				$.ajax({
 					type : "get",
