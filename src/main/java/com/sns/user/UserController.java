@@ -33,33 +33,17 @@ public class UserController {
 		model.addAttribute("viewName", "user/signUp");
 		return "template/layout";
 	}
-	
+
 	/**
 	 * 로그인 화면
 	 * 
 	 * @param model
 	 * @return
 	 */
-	
 
 	@GetMapping("/sign_in_view")
 	public String loginView(Model model) {
 		model.addAttribute("viewName", "user/signIn");
 		return "template/layout";
-	}
-
-	@ResponseBody
-	@PostMapping("/check_duplication")
-	public Map<String, Object> checkDuplication(@RequestParam("loginId") int loginId) {
-		User user = userBO.checkDuplication(loginId);
-
-		Map<String, Object> result = new HashMap<>();
-		if (user != null) {
-			result.put("exist", true);
-		} else if (user == null) {
-			result.put("exist", false);
-		}
-
-		return result;
 	}
 }

@@ -12,7 +12,16 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 
-	public User checkDuplication(int loginId) {
-		return userDAO.checkDuplication(loginId);
+	public User getUserByLoginId(String loginId) {
+		return userDAO.selectUserByLoginId(loginId);
 	}
+
+	public void addUserByLoginId(User user) {
+		userDAO.insertUserByLoginId(user);
+	}
+
+	public User getUserByLoginIdPassword(String loginId, String password) {
+		return userDAO.selectUserByLoginIdPassword(loginId, password);
+	}
+
 }
