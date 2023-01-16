@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sns.user.dao.UserDAO;
+import com.sns.user.model.User;
 
 @Service
 public class UserBO {
@@ -11,7 +12,7 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 
-	public Boolean checkDuplication(int loginId) {
+	public User checkDuplication(int loginId) {
 		return userDAO.checkDuplication(loginId);
 	}
 }

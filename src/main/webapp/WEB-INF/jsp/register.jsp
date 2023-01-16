@@ -29,6 +29,9 @@
 </head>
 <body>
 	<div class="container">
+		<header class="bg-secondary">
+			<jsp:include page=".../include/header.jsp" />
+		</header>
 		<h2 class="text-center pt-3 pb-3">회원가입</h2>
 		<div class="d-flex justify-content-center">
 			<div class="col-4">

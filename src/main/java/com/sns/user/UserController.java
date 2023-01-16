@@ -5,39 +5,58 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sns.user.bo.UserBO;
+import com.sns.user.model.User;
 
-@Controller
 @RequestMapping("/user")
+@Controller
 public class UserController {
+	/**
+	 * 회원가입 화면
+	 * 
+	 * @param model
+	 * @return
+	 */
 
 	@Autowired
 	private UserBO userBO;
 
-	@GetMapping("/login_view")
-	public String loginView() {
-		return "sns/login";
+	@GetMapping("/sign_up_view")
+	public String registerView(Model model) {
+		model.addAttribute("viewName", "user/signUp");
+		return "template/layout";
+	}
+	
+	/**
+	 * 로그인 화면
+	 * 
+	 * @param model
+	 * @return
+	 */
+	
+
+	@GetMapping("/sign_in_view")
+	public String loginView(Model model) {
+		model.addAttribute("viewName", "user/signIn");
+		return "template/layout";
 	}
 
-	@GetMapping("/register_view")
-	public String registerView() {
-		return "sns/register";
-	}
-
-	@GetMapping("/check_duplication")
 	@ResponseBody
+	@PostMapping("/check_duplication")
 	public Map<String, Object> checkDuplication(@RequestParam("loginId") int loginId) {
-		Boolean doesExist = userBO.checkDuplication(loginId);
+		User user = userBO.checkDuplication(loginId);
 
 		Map<String, Object> result = new HashMap<>();
-		if (doesExist) {
+		if (user != null) {
 			result.put("exist", true);
-		} else if (doesExist == false) {
+		} else if (user == null) {
 			result.put("exist", false);
 		}
 
