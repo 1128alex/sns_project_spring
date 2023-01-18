@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sns.user.bo.UserBO;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/user")
 @Controller
 public class UserController {
@@ -39,4 +41,14 @@ public class UserController {
 		model.addAttribute("viewName", "user/signIn");
 		return "template/layout";
 	}
+
+	@GetMapping("/sign_out")
+	public String signOut(HttpSession session) {
+		session.removeAttribute("userId");
+		session.removeAttribute("userLoginId");
+		session.removeAttribute("userName");
+
+		return "redirect:/user/sign_in_view";
+	}
+
 }

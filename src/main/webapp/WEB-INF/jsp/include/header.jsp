@@ -8,9 +8,18 @@
 		</h1>
 	</div>
 	<div class="login-info d-flex align-items-end mb-3 mr-5">
-		<span class="text-white">${userName}님 안녕하세요</span> <a
-			href="/user/sign_out" class="ml-2 text-white font-weight-bold">로그
-			아웃</a>
+		<c:choose>
+			<c:when test="${userName eq null}">
+				<a href="/user/sign_in_view"
+					class="ml-2 text-white font-weight-bold">로그인</a>
+			</c:when>
+			<c:otherwise>
+				<span class="text-white"><b>${userName}</b>님 안녕하세요</span>
+				<a href="/user/sign_out" class="ml-2 text-white font-weight-bold">로그
+					아웃</a>
+			</c:otherwise>
+		</c:choose>
+
 	</div>
 
 

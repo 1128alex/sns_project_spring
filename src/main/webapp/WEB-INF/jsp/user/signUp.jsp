@@ -87,7 +87,7 @@
 				});
 			});
 			$('#signUpForm').on('submit', function(e) {
-				e.preventDefault;
+				e.preventDefault();
 
 				let loginId = $('#loginId').val().trim();
 				if (loginId == '') {

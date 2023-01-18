@@ -8,7 +8,7 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">ID</span>
 				</div>
-				<input type="text" class="form-control" id="name" name="loginId">
+				<input type="text" class="form-control" id="loginId" name="loginId">
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
@@ -21,10 +21,10 @@
 			<a class="btn btn-block btn-dark" href="/user/sign_up_view">회원가입</a>
 		</form>
 	</div>
-	<script type="text/javascript">
+	<script>
 		$(document).ready(function() {
 			$('#loginForm').on('submit', function(e) {
-				e.preventDefault;
+				e.preventDefault();
 
 				let loginId = $('#loginId').val().trim();
 				let password = $('#password').val().trim();
@@ -44,9 +44,11 @@
 
 				$.post(url, params).done(function(data) {
 					if (data.code == 1) {
-						location.href = "/post/post_list_view";
+						alert("로그인 되었습니다.");
+						location.href = "/post/timeline_view";
 					} else {
 						alert(data.errorMessage);
+						$('#password').val('');
 					}
 				});
 			});
