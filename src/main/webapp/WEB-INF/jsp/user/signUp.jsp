@@ -19,7 +19,6 @@
 					ID입니다.</div>
 			</div>
 
-
 			<span class="sign-up-subject">Password</span>
 			<div class="m-3">
 				<input type="password" name="password" id="password"
@@ -34,18 +33,18 @@
 
 			<span class="sign-up-subject">Name</span>
 			<div class="m-3">
-				<input type="text" name="name" class="form-control col-6"
+				<input type="text" id="name" name="name" class="form-control col-6"
 					placeholder="이름을 입력하세요">
 			</div>
 
 			<span class="sign-up-subject">이메일</span>
 			<div class="m-3">
-				<input type="text" name="email" class="form-control col-6"
-					placeholder="이름을 입력하세요">
+				<input type="text" id="email" name="email"
+					class="form-control col-6" placeholder="이름을 입력하세요">
 			</div>
 			<br>
 			<div class="d-flex justify-content-center m-3">
-				<button type="button" id="signUpBtn" class="btn btn-info">가입하기</button>
+				<button type="submit" id="signUpBtn" class="btn btn-info">가입하기</button>
 			</div>
 		</form>
 	</div>

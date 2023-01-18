@@ -18,7 +18,7 @@
 					name="password">
 			</div>
 			<button type="submit" class="btn btn-block btn-info">로그인</button>
-			<a class="btn btn-block btn-dark" href="/user/sign_in">회원가입</a>
+			<a class="btn btn-block btn-dark" href="/user/sign_up_view">회원가입</a>
 		</form>
 	</div>
 	<script type="text/javascript">
