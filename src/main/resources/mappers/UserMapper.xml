@@ -16,8 +16,7 @@
 		FROM
 		`user`
 		WHERE
-		`loginId` = #{loginId}
-		LIMIT 1;
+		`loginId` = #{loginId};
 	</select>
 
 	<insert id="insertUserByLoginId"

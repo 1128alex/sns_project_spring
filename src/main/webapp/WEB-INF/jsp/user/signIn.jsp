@@ -44,7 +44,6 @@
 
 				$.post(url, params).done(function(data) {
 					if (data.code == 1) {
-						alert("로그인 되었습니다.");
 						location.href = "/post/timeline_view";
 					} else {
 						alert(data.errorMessage);

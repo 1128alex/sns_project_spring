@@ -4,7 +4,7 @@
 <div class="header bg-info d-flex justify-content-between">
 	<div class="logo d-flex align-items-center">
 		<h1 class="text-white ml-3">
-			<a href="/timeline/timeline_view" class="text-white">Marondalgram</a>
+			<a href="/post/timeline_view" class="text-white">Marondalgram</a>
 		</h1>
 	</div>
 	<div class="login-info d-flex align-items-end mb-3 mr-5">

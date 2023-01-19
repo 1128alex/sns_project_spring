@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- Core -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="d-flex justify-content-center">
 	<div class="contents-box">
 		<%-- 글쓰기 영역: 로그인 된 상태에서만 보여짐 --%>
@@ -25,73 +27,77 @@
 		</div>
 		<%--// 글쓰기 영역 끝 --%>
 
-		<%-- 타임라인 영역 --%>
-		<div class="timeline-box my-5">
-			<%-- 카드1 --%>
-			<div class="card border rounded mt-3">
-				<%-- 글쓴이, 더보기(삭제) --%>
-				<div class="p-2 d-flex justify-content-between">
-					<span class="font-weight-bold">글쓰니</span>
 
-					<%-- 더보기 --%>
-					<a href="#" class="more-btn" data-toggle="modal"
-						data-target="#modal" data-post-id="${card.post.id}"> <img
-						src="https://www.iconninja.com/files/860/824/939/more-icon.png"
-						width="30">
-					</a>
-				</div>
+		<c:forEach var="post" items="${posts}">
+			<%-- 타임라인 영역 --%>
+			<div class="timeline-box my-5">
+				<%-- 카드1 --%>
+				<div class="card border rounded mt-3">
+					<%-- 글쓴이, 더보기(삭제) --%>
+					<div class="p-2 d-flex justify-content-between">
+						<span class="font-weight-bold">${post.userId}</span>
 
-				<%-- 카드 이미지 --%>
-				<div class="card-img">
-					<img
-						src="https://cdn.pixabay.com/photo/2022/04/13/20/32/silhouette-7131109_960_720.png"
-						class="w-100" alt="본문 이미지">
-				</div>
-
-				<%-- 좋아요 --%>
-				<div class="card-like m-3">
-					<a href="#" class="like-btn"> <img
-						src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
-						width="18" height="18" alt="empty heart"> 좋아요 10개
-					</a>
-				</div>
-
-				<%-- 글 --%>
-				<div class="card-post m-3">
-					<span class="font-weight-bold">글쓰니</span> <span>글 내용입니다</span>
-				</div>
-
-				<%-- 댓글 --%>
-				<div class="card-comment-desc border-bottom">
-					<div class="ml-3 mb-1 font-weight-bold">댓글</div>
-				</div>
-
-				<%-- 댓글 목록 --%>
-				<div class="card-comment-list m-2">
-					<div class="card-comment m-1">
-						<span class="font-weight-bold">댓글쓰니:</span> <span>댓글
-							내용11111</span>
-
-						<%-- 댓글 삭제 버튼 --%>
-						<a href="#" class="commentDelBtn"> <img
-							src="https://www.iconninja.com/files/603/22/506/x-icon.png"
-							width="10px" height="10px">
+						<%-- 더보기 --%>
+						<a href="#" class="more-btn" data-toggle="modal"
+							data-target="#modal" data-post-id="${card.post.id}"> <img
+							src="https://www.iconninja.com/files/860/824/939/more-icon.png"
+							width="30">
 						</a>
 					</div>
 
-					<%-- 댓글 쓰기 --%>
-					<div class="comment-write d-flex border-top mt-2">
-						<input type="text" class="form-control border-0 mr-2"
-							placeholder="댓글 달기" />
-						<button type="button" id="commentBtn"
-							class="comment-btn btn btn-light" data-post-id="${card.post.id}">게시</button>
+					<%-- 카드 이미지 --%>
+					<div class="card-img">
+						<img src="${post.imagePath}" class="w-100" alt="본문 이미지">
 					</div>
+
+					<%-- 좋아요 --%>
+					<div class="card-like m-3">
+						<a href="#" class="like-btn"> <img
+							src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
+							width="18" height="18" alt="empty heart"> 좋아요 10개
+						</a>
+					</div>
+
+					<%-- 글 --%>
+					<div class="card-post m-3">
+						<span class="font-weight-bold">${post.userId}</span> <span>${post.content}</span>
+					</div>
+
+					<%-- 댓글 --%>
+					<div class="card-comment-desc border-bottom">
+						<div class="ml-3 mb-1 font-weight-bold">댓글</div>
+					</div>
+
+					<%-- 댓글 목록 --%>
+					<div class="card-comment-list m-2">
+						<c:forEach var="comment" items="${comments}">
+							<div class="card-comment m-1">
+								<span class="font-weight-bold">${comment.userId}</span> <span>${comment.content}</span>
+
+								<%-- 댓글 삭제 버튼 --%>
+								<a href="#" class="commentDelBtn"> <img
+									src="https://www.iconninja.com/files/603/22/506/x-icon.png"
+									width="10px" height="10px">
+								</a>
+							</div>
+						</c:forEach>
+
+						<%-- 댓글 쓰기 --%>
+						<c:if test="${not empty userId}">
+							<div class="comment-write d-flex border-top mt-2">
+								<input type="text" id="comment-text"
+									class="form-control border-0 mr-2" placeholder="댓글 달기" />
+								<button type="button" class="comment-btn btn btn-light"
+									data-post-id="${post.id}">게시</button>
+							</div>
+						</c:if>
+					</div>
+					<%--// 댓글 목록 끝 --%>
 				</div>
-				<%--// 댓글 목록 끝 --%>
+				<%--// 카드1 끝 --%>
 			</div>
-			<%--// 카드1 끝 --%>
-		</div>
-		<%--// 타임라인 영역 끝  --%>
+			<%--// 타임라인 영역 끝  --%>
+		</c:forEach>
 	</div>
 </div>
 
@@ -157,6 +163,37 @@
 
 			// 유효성 통과한 이미지
 			$('#fileName').text();
+		});
+
+		$('.comment-btn').on('click', function() {
+			let postId = $(this).data('post-id');
+			let comment = $(this).siblings('input').val();
+
+			if (comment == '') {
+				alert("댓글 내용을 입력해주세요");
+				return false;
+			}
+			$.ajax({
+				type : "get",
+				url : "/comment/create_comment",
+				data : {
+					"comment" : comment,
+					"postId" : postId
+				},
+				success : function(data) {
+					if (data.code == 1) {
+						alert("성공");
+						location.reload();
+					} else {
+						alert("실패");
+					}
+
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus)
+				}
+			});
 		});
 	});
 </script>
