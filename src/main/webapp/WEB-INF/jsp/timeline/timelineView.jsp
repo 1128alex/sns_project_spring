@@ -46,9 +46,11 @@
 					</div>
 
 					<%-- 카드 이미지 --%>
-					<div class="card-img">
-						<img src="${post.imagePath}" class="w-100" alt="본문 이미지">
-					</div>
+					<c:if test="${not empty post.imagePath}">
+						<div class="card-img">
+							<img src="${post.imagePath}" class="w-100" alt="본문 이미지">
+						</div>
+					</c:if>
 
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
@@ -60,7 +62,8 @@
 
 					<%-- 글 --%>
 					<div class="card-post m-3">
-						<span class="font-weight-bold">${post.userId}</span> <span>${post.content}</span>
+						<span class="userId_of_post font-weight-bold">${post.userId}</span>
+						<span>${post.content}</span>
 					</div>
 
 					<%-- 댓글 --%>
@@ -71,15 +74,19 @@
 					<%-- 댓글 목록 --%>
 					<div class="card-comment-list m-2">
 						<c:forEach var="comment" items="${comments}">
-							<div class="card-comment m-1">
-								<span class="font-weight-bold">${comment.userId}</span> <span>${comment.content}</span>
+							<c:if test="${comment.postId eq post.id }">
+								<div class="card-comment m-1">
+									<span class="userId_of_comment font-weight-bold">${comment.userId}</span>
+									<span>${comment.content}</span>
 
-								<%-- 댓글 삭제 버튼 --%>
-								<a href="#" class="commentDelBtn"> <img
-									src="https://www.iconninja.com/files/603/22/506/x-icon.png"
-									width="10px" height="10px">
-								</a>
-							</div>
+									<%-- 댓글 삭제 버튼 --%>
+									<a href="/comment/delete_comment?commentId=${comment.id}"
+										class="commentDelBtn"> <img
+										src="https://www.iconninja.com/files/603/22/506/x-icon.png"
+										width="10px" height="10px">
+									</a>
+								</div>
+							</c:if>
 						</c:forEach>
 
 						<%-- 댓글 쓰기 --%>
@@ -136,7 +143,7 @@
 				contentType : false, // 파일 업로드를 위한 필수 설정
 				success : function(data) {
 					if (data.code == 1) {
-						alert("게시성공");
+						alert("게시물 업로드 성공");
 						location.reload();
 					}
 				},
@@ -182,7 +189,6 @@
 				},
 				success : function(data) {
 					if (data.code == 1) {
-						alert("성공");
 						location.reload();
 					} else {
 						alert("실패");

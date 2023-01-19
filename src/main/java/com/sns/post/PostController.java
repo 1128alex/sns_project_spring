@@ -37,6 +37,7 @@ public class PostController {
 		if (rowCount > 0) {
 			result.put("code", 1);
 			result.put("result", "성공");
+			result.put("userLoginId", userLoginId);
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "게시물을 올리는데 실패했습니다.");

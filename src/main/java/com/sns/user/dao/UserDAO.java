@@ -7,6 +7,7 @@ import com.sns.user.model.User;
 
 @Repository
 public interface UserDAO {
+
 	public User selectUserByLoginId(String loginId);
 
 	public void insertUserByLoginId(User user);
