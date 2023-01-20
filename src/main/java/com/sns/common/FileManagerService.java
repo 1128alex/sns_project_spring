@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileManagerService {
 	// 실제 이미지가 저장될 경로(서버)
-//	public static final String FILE_UPLOAD_PATH = "D:\\이지원\\6_project(선생님)\\sns\\workspace\\images/";
-	public static final String FILE_UPLOAD_PATH = "C:\\Users\\이지원\\Documents\\CS\\Project\\SNS\\workspace\\images/";
+	public static final String FILE_UPLOAD_PATH = "D:\\이지원\\6_project(선생님)\\sns\\workspace\\images/";
+//	public static final String FILE_UPLOAD_PATH = "C:\\Users\\이지원\\Documents\\CS\\Project\\SNS\\workspace\\images/";
 
 	public String saveFile(String userLoginId, MultipartFile file) {
 		String directoryName = userLoginId + "_" + System.currentTimeMillis() + "/"; // "marobiana_16205468764/"

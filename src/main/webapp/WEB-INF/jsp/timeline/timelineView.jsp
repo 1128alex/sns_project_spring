@@ -28,14 +28,14 @@
 		<%--// 글쓰기 영역 끝 --%>
 
 
-		<c:forEach var="post" items="${posts}">
+		<c:forEach var="card" items="${cards}">
 			<%-- 타임라인 영역 --%>
 			<div class="timeline-box my-5">
 				<%-- 카드1 --%>
 				<div class="card border rounded mt-3">
 					<%-- 글쓴이, 더보기(삭제) --%>
 					<div class="p-2 d-flex justify-content-between">
-						<span class="font-weight-bold">${post.userId}</span>
+						<span class="font-weight-bold">${card.user.loginId}</span>
 
 						<%-- 더보기 --%>
 						<a href="#" class="more-btn" data-toggle="modal"
@@ -46,15 +46,15 @@
 					</div>
 
 					<%-- 카드 이미지 --%>
-					<c:if test="${not empty post.imagePath}">
+					<c:if test="${not empty card.post.imagePath}">
 						<div class="card-img">
-							<img src="${post.imagePath}" class="w-100" alt="본문 이미지">
+							<img src="${card.post.imagePath}" class="w-100" alt="본문 이미지">
 						</div>
 					</c:if>
 
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
-						<a href="#" class="like-btn"> <img
+						<a href="/like/${card.post.id}" class="like-btn"> <img
 							src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
 							width="18" height="18" alt="empty heart"> 좋아요 10개
 						</a>
@@ -62,8 +62,8 @@
 
 					<%-- 글 --%>
 					<div class="card-post m-3">
-						<span class="userId_of_post font-weight-bold">${post.userId}</span>
-						<span>${post.content}</span>
+						<span class="userId_of_post font-weight-bold">${card.user.loginId}</span>
+						<span>${card.post.content}</span>
 					</div>
 
 					<%-- 댓글 --%>
@@ -73,29 +73,27 @@
 
 					<%-- 댓글 목록 --%>
 					<div class="card-comment-list m-2">
-						<c:forEach var="comment" items="${comments}">
-							<c:if test="${comment.postId eq post.id }">
-								<div class="card-comment m-1">
-									<span class="userId_of_comment font-weight-bold">${comment.userId}</span>
-									<span>${comment.content}</span>
+						<c:forEach var="comment" items="${card.comments}">
+							<div class="card-comment m-1">
+								<span class="font-weight-bold">${comment.user.loginId}</span> <span>${comment.comment.content}</span>
 
-									<%-- 댓글 삭제 버튼 --%>
-									<a href="/comment/delete_comment?commentId=${comment.id}"
-										class="commentDelBtn"> <img
-										src="https://www.iconninja.com/files/603/22/506/x-icon.png"
-										width="10px" height="10px">
-									</a>
-								</div>
-							</c:if>
+								<%-- 댓글 삭제 버튼 --%>
+								<a
+									href="/comment/delete_comment?commentId=${comment.comment.id}"
+									class="commentDelBtn"> <img
+									src="https://www.iconninja.com/files/603/22/506/x-icon.png"
+									width="10px" height="10px">
+								</a>
+							</div>
 						</c:forEach>
 
 						<%-- 댓글 쓰기 --%>
-						<c:if test="${not empty userId}">
+						<c:if test="${not empty userLoginId}">
 							<div class="comment-write d-flex border-top mt-2">
 								<input type="text" id="comment-text"
 									class="form-control border-0 mr-2" placeholder="댓글 달기" />
 								<button type="button" class="comment-btn btn btn-light"
-									data-post-id="${post.id}">게시</button>
+									data-post-id="${card.post.id}">게시</button>
 							</div>
 						</c:if>
 					</div>

@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sns.comment.bo.CommentBO;
-import com.sns.comment.model.Comment;
-import com.sns.post.bo.PostBO;
-import com.sns.post.model.Post;
+import com.sns.timeline.bo.TimelineBO;
+import com.sns.timeline.model.CardView;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,22 +18,17 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TimelineController {
 	@Autowired
-	private PostBO postBO;
-	@Autowired
-	private CommentBO commentBO;
+	private TimelineBO timelineBO;
 
 	@GetMapping("/timeline_view")
 	public String postListView(Model model, HttpSession session) {
 		String userLoginId = (String) session.getAttribute("userLoginId");
 
-		if (userLoginId == null) {
-			return "redirect:/user/sign_in_view";
-		}
+		List<CardView> cards = timelineBO.generateCardList();
 
-		List<Post> posts = postBO.getPostList();
-		List<Comment> comments = commentBO.getCommentList();
-		model.addAttribute("posts", posts);
-		model.addAttribute("comments", comments);
+		model.addAttribute("userLoginId", userLoginId);
+		model.addAttribute("cards", cards);
+
 		model.addAttribute("viewName", "timeline/timelineView");
 		return "template/layout";
 	}
