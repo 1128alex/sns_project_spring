@@ -10,11 +10,25 @@ public class LikeBO {
 	@Autowired
 	private LikeDAO likeDAO;
 
-	public void addLike(int userId, int postId) {
-		likeDAO.insertLike(userId, postId);
+	public void likeToggle(int postId, int userId) {
+		// 좋아요 있는지 확인
+		if (likeDAO.selectLikeCountByPostIdOrUserId(postId, userId) > 0) {
+			// 있으면 제거
+			likeDAO.deleteLikeByPostIdUserId(postId, userId);
+		} else {
+			// 없으면 추가
+			likeDAO.insertLike(postId, userId);
+		}
 	}
 
-	public int countLikeByPostId(int postId) {
-		return likeDAO.countLikeByPostId(postId);
+	public boolean existLike(int postId, Integer userId) {
+		if (userId == null) { // 비로그인
+			return false;
+		}
+		return likeDAO.selectLikeCountByPostIdOrUserId(postId, userId) > 0 ? true : false; // 로그인
+	}
+
+	public int getLikeCountByPostId(int postId) {
+		return likeDAO.selectLikeCountByPostIdOrUserId(postId, null);
 	}
 }

@@ -22,13 +22,21 @@ public class LikeRestController {
 	// /like/13 @PathVariable
 	@GetMapping("/like/{postId}")
 	public Map<String, Object> like(@PathVariable int postId, HttpSession session) {
-		int userId = (int) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 
 		Map<String, Object> result = new HashMap<>();
 
-		likeBO.addLike(userId, postId);
+		if (userId == null) {
+			result.put("code", 500); // 비로그인
+			result.put("errorMessage", "로그인을 해주세요");
+			return result;
+		}
 
-		result.put("code", 1);
+		// 좋아요 있으면 삭제 / 없으면 추가
+		likeBO.likeToggle(postId, userId);
+
+		result.put("code", 1); // 성공
+		result.put("result", "성공");
 
 		return result;
 	}
