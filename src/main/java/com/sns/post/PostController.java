@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,27 @@ public class PostController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "게시물을 올리는데 실패했습니다.");
+		}
+
+		return result;
+
+	}
+
+	@DeleteMapping("/delete")
+	@ResponseBody
+	public Map<String, Object> deletePost(@RequestParam("postId") int postId, HttpSession session) {
+		int userId = (int) session.getAttribute("userId");
+
+		int rowCount = postBO.deletePostByPostIdUserId(postId, userId);
+
+		Map<String, Object> result = new HashMap<>();
+
+		if (rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "삭제를 실패했습니다.(PostController)");
 		}
 
 		return result;

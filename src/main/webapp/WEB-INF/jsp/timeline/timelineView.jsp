@@ -36,13 +36,14 @@
 					<%-- 글쓴이, 더보기(삭제) --%>
 					<div class="p-2 d-flex justify-content-between">
 						<span class="font-weight-bold">${card.user.loginId}</span>
-
-						<%-- 더보기 --%>
-						<a href="#" class="more-btn" data-toggle="modal"
-							data-target="#modal" data-post-id="${card.post.id}"> <img
-							src="https://www.iconninja.com/files/860/824/939/more-icon.png"
-							width="30">
-						</a>
+						<c:if test="${card.user.loginId eq userLoginId}">
+							<%-- 더보기 --%>
+							<a href="#" class="more-btn" data-toggle="modal"
+								data-target="#modal" data-post-id="${card.post.id}"> <img
+								src="https://www.iconninja.com/files/860/824/939/more-icon.png"
+								width="30">
+							</a>
+						</c:if>
 					</div>
 
 					<%-- 카드 이미지 --%>
@@ -116,6 +117,23 @@
 			</div>
 			<%--// 타임라인 영역 끝  --%>
 		</c:forEach>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal">
+	<%-- modal-sm: 작은 모달 창 --%>
+	<%-- modal-dialog-centered: 모달 창을 수직으로 가운데 정렬 --%>
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content text-center">
+			<div class="py-3 border-bottom">
+				<a href="#" id="deletePostBtn">삭제하기</a>
+			</div>
+			<div class="py-3">
+				<%-- data-dismiss="modal" 모달창 닫힘 --%>
+				<a href="#" data-dismiss="modal">취소하기</a>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -241,6 +259,34 @@
 					var errorMsg = jqXHR.responseJSON.status;
 					alert(errorMsg + ":" + textStatus)
 				}
+			});
+		});
+
+		// 더보기 버튼(...) 클릭 (글 삭제를 위해)
+		$('.more-btn').on('click', function(e) {
+			e.preventDefault();
+			let postId = $(this).data("post-id"); // getting
+
+			$('#modal').data("post-id", postId); // setting 모달 태그에 data-post-id를 심어 넣어줌
+			$('#modal #deletePostBtn').on('click', function() {
+				$.ajax({
+					type : "delete",
+					url : "/post/delete",
+					data : {
+						"postId" : postId
+					},
+					success : function(data) {
+						if (data.code = 1) {
+							alert("삭제 완료!");
+							location.reload();
+						} else {
+							alert(data.errorMessage);
+						}
+					},
+					error : function(e) {
+						alert("ajax error " + e);
+					}
+				});
 			});
 		});
 	});
